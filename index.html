@@ -1,3 +1,742 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iTabs Journey: From GIFs to SmartLinks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .story-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #3498db;
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        /* iTabs Styling */
+        .itabs-link {
+            color: #3498db;
+            text-decoration: none;
+            position: relative;
+            font-weight: 600;
+        }
+
+        .i-indicator {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            font-style: italic;
+            font-weight: bold;
+            margin-left: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            top: -2px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        .i-indicator:hover {
+            transform: scale(1.2);
+            animation: none;
+        }
+
+        /* Popup Styling */
+        .itabs-popup {
+            position: fixed;
+            background: white;
+            width: 500px;
+            max-width: 90vw;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            border: 1px solid #e0e0e0;
+        }
+
+        .itabs-popup.active {
+            display: block;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .popup-header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+        }
+
+        .popup-title {
+            font-weight: 600;
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .popup-tabs {
+            display: flex;
+            background: #f8f9fa;
+        }
+
+        .popup-tab {
+            flex: 1;
+            padding: 15px 10px;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .popup-tab:hover {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+
+        .popup-tab.active {
+            background: white;
+            color: #3498db;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .popup-content {
+            padding: 25px;
+            min-height: 250px;
+            max-height: 350px;
+            overflow-y: auto;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .tab-content ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .tab-content li {
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+
+        .highlight-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 12px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #27ae60;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .content { padding: 25px; }
+            .itabs-popup { width: 95vw; }
+            .popup-content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>From GIFs to iTabs</h1>
+            <p>The 5-Year Journey to Revolutionizing Web Information</p>
+        </div>
+
+        <div class="content">
+            <div class="story-section">
+                <div class="story-text">
+                    The journey began in 2019 when <span class="itabs-link">CoverCard.com.au<span class="i-indicator" onclick="showPopup('covercard', event)">i</span></span> was wrapping up. A simple question sparked everything: "How could we have promoted CoverCard better, and for free?"
+                </div>
+                
+                <div class="story-text">
+                    This led to the discovery of <span class="itabs-link">GIF makers<span class="i-indicator" onclick="showPopup('gif-discovery', event)">i</span></span> and the realization of their power for visual storytelling. The concept evolved through multiple phases until reaching the breakthrough moment.
+                </div>
+            </div>
+
+            <div class="story-section">
+                <div class="story-text">
+                    The game-changing realization came with <span class="itabs-link">the Form Breakthrough<span class="i-indicator" onclick="showPopup('form-breakthrough', event)">i</span></span> - understanding that simple, well-designed forms could create professional content summaries without complex AI systems.
+                </div>
+                
+                <div class="story-text">
+                    This led to embracing <span class="itabs-link">the universal (i) symbol<span class="i-indicator" onclick="showPopup('i-symbol', event)">i</span></span> as the perfect interface element - already understood by every web user as "click for more information."
+                </div>
+            </div>
+
+            <div class="story-section">
+                <div class="story-text">
+                    Current development focuses on <span class="itabs-link">WordPress integration<span class="i-indicator" onclick="showPopup('wordpress-strategy', event)">i</span></span> as the natural first step, building toward broader applications across multiple platforms.
+                </div>
+                
+                <div class="story-text">
+                    The platform is designed for <span class="itabs-link">scalable growth<span class="i-indicator" onclick="showPopup('future-vision', event)">i</span></span> with opportunities for technical collaboration and market expansion.
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <h3>Ready to Transform Web Information?</h3>
+                <p>Join the SmartLinks revolution and help create the future of intelligent web navigation.</p>
+                <a href="mailto:hello@itabs.co" class="cta-button">Start Collaboration</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CoverCard Popup -->
+    <div id="covercard-popup" class="itabs-popup">
+        <div class="popup-header">
+            <h3 class="popup-title">CoverCard.com.au Origins</h3>
+            <button class="close-btn" onclick="closePopup('covercard')">&times;</button>
+        </div>
+        <div class="popup-tabs">
+            <button class="popup-tab active" onclick="switchTab('covercard', 'problem')">Problem</button>
+            <button class="popup-tab" onclick="switchTab('covercard', 'solution')">Solution</button>
+            <button class="popup-tab" onclick="switchTab('covercard', 'insight')">Key Insight</button>
+        </div>
+        <div class="popup-content">
+            <div id="covercard-problem" class="tab-content active">
+                <h3>The Mining Industry Challenge</h3>
+                <p>Based in Perth during the Pilbara mining boom, the recruitment chaos was overwhelming:</p>
+                <ul>
+                    <li>Workers needed multiple certifications and tickets</li>
+                    <li>Recruitment agents drowning in paperwork</li>
+                    <li>Inefficient application processes</li>
+                    <li>Qualification verification challenges</li>
+                </ul>
+                <div class="highlight-box">
+                    The industry was crying out for streamlined solutions.
+                </div>
+            </div>
+            <div id="covercard-solution" class="tab-content">
+                <h3>What CoverCard Built</h3>
+                <p>A comprehensive platform for mining industry recruitment:</p>
+                <ul>
+                    <li>Central storage for qualifications and certifications</li>
+                    <li>Digital ticket management system</li>
+                    <li>Streamlined application process</li>
+                    <li>Verification and compliance tracking</li>
+                </ul>
+                <div class="highlight-box">
+                    The product was good, but marketing and visibility were the missing pieces.
+                </div>
+            </div>
+            <div id="covercard-insight" class="tab-content">
+                <h3>The Critical Realization</h3>
+                <p>The failure of CoverCard wasn't about the product quality:</p>
+                <ul>
+                    <li>Technical solution was solid and needed</li>
+                    <li>Market demand was clearly present</li>
+                    <li>Problem was communication and promotion</li>
+                    <li>Needed better ways to show value to the world</li>
+                </ul>
+                <div class="highlight-box">
+                    This insight became the foundation for everything that followed - the importance of effective information sharing.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GIF Discovery Popup -->
+    <div id="gif-discovery-popup" class="itabs-popup">
+        <div class="popup-header">
+            <h3 class="popup-title">The GIF Maker Discovery</h3>
+            <button class="close-btn" onclick="closePopup('gif-discovery')">&times;</button>
+        </div>
+        <div class="popup-tabs">
+            <button class="popup-tab active" onclick="switchTab('gif-discovery', 'discovery')">Discovery</button>
+            <button class="popup-tab" onclick="switchTab('gif-discovery', 'evolution')">Evolution</button>
+            <button class="popup-tab" onclick="switchTab('gif-discovery', 'naming')">Naming</button>
+        </div>
+        <div class="popup-content">
+            <div id="gif-discovery-discovery" class="tab-content active">
+                <h3>The App Store Moment</h3>
+                <p>Exploring the App Store led to a simple but powerful realization:</p>
+                <ul>
+                    <li>GIF makers were incredibly simple to use</li>
+                    <li>Select photos, add text, share to social media</li>
+                    <li>The ease of creation was revolutionary</li>
+                    <li>Visual storytelling made complex</li>
+                </ul>
+                <div class="highlight-box">
+                    "Why hadn't I thought of this during CoverCard's active days?"
+                </div>
+            </div>
+            <div id="gif-discovery-evolution" class="tab-content">
+                <h3>From GIFs to Links</h3>
+                <p>The concept evolved beyond simple GIF creation:</p>
+                <ul>
+                    <li>GIFs tell stories effectively</li>
+                    <li>But links need better promotion methods</li>
+                    <li>Visual information sharing has untapped power</li>
+                    <li>Quick, digestible content wins attention</li>
+                </ul>
+                <div class="highlight-box">
+                    The bridge between visual storytelling and link promotion became the core insight.
+                </div>
+            </div>
+            <div id="gif-discovery-naming" class="tab-content">
+                <h3>Gifylink Origins</h3>
+                <p>The name combined two powerful concepts:</p>
+                <ul>
+                    <li><strong>GIF</strong>: Visual storytelling and quick information</li>
+                    <li><strong>Link</strong>: Connection and promotion</li>
+                    <li>People initially laughed at the name</li>
+                    <li>GIFs seemed too casual for serious business</li>
+                </ul>
+                <div class="highlight-box">
+                    But the deeper insight was about the power of quick, visual information sharing.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Breakthrough Popup -->
+    <div id="form-breakthrough-popup" class="itabs-popup">
+        <div class="popup-header">
+            <h3 class="popup-title">The Form Revolution</h3>
+            <button class="close-btn" onclick="closePopup('form-breakthrough')">&times;</button>
+        </div>
+        <div class="popup-tabs">
+            <button class="popup-tab active" onclick="switchTab('form-breakthrough', 'realization')">Realization</button>
+            <button class="popup-tab" onclick="switchTab('form-breakthrough', 'power')">Power</button>
+            <button class="popup-tab" onclick="switchTab('form-breakthrough', 'impact')">Impact</button>
+        </div>
+        <div class="popup-content">
+            <div id="form-breakthrough-realization" class="tab-content active">
+                <h3>The Simple Truth</h3>
+                <p>The breakthrough moment was beautifully simple:</p>
+                <ul>
+                    <li>Complex AI systems weren't necessary</li>
+                    <li>Well-designed forms could do the job</li>
+                    <li>People just needed easy ways to organize information</li>
+                    <li>Simplicity beats complexity every time</li>
+                </ul>
+                <div class="highlight-box">
+                    "We didn't need AI at all. All we needed was a well-designed form."
+                </div>
+            </div>
+            <div id="form-breakthrough-power" class="tab-content">
+                <h3>What Forms Enable</h3>
+                <p>Simple forms became the gateway to professional content:</p>
+                <ul>
+                    <li>Add key information easily</li>
+                    <li>Upload one relevant image</li>
+                    <li>Create professional quick summaries</li>
+                    <li>Share content effectively across platforms</li>
+                </ul>
+                <div class="highlight-box">
+                    The power wasn't in technology - it was in giving people easy ways to summarize information.
+                </div>
+            </div>
+            <div id="form-breakthrough-impact" class="tab-content">
+                <h3>Revolutionary Implications</h3>
+                <p>This insight changed everything about the approach:</p>
+                <ul>
+                    <li>Eliminated technical barriers for users</li>
+                    <li>Made creation accessible to everyone</li>
+                    <li>Focused on user needs, not technical capabilities</li>
+                    <li>Opened endless possibilities for applications</li>
+                </ul>
+                <div class="highlight-box">
+                    Sometimes the most powerful solutions are the simplest ones.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- I Symbol Popup -->
+    <div id="i-symbol-popup" class="itabs-popup">
+        <div class="popup-header">
+            <h3 class="popup-title">The Universal (i) Symbol</h3>
+            <button class="close-btn" onclick="closePopup('i-symbol')">&times;</button>
+        </div>
+        <div class="popup-tabs">
+            <button class="popup-tab active" onclick="switchTab('i-symbol', 'recognition')">Recognition</button>
+            <button class="popup-tab" onclick="switchTab('i-symbol', 'benefits')">Benefits</button>
+            <button class="popup-tab" onclick="switchTab('i-symbol', 'implementation')">Implementation</button>
+        </div>
+        <div class="popup-content">
+            <div id="i-symbol-recognition" class="tab-content active">
+                <h3>Universal Understanding</h3>
+                <p>The (i) symbol is perfectly positioned for this solution:</p>
+                <ul>
+                    <li>Every website user already understands it</li>
+                    <li>Universally recognized across cultures</li>
+                    <li>Professional and trusted appearance</li>
+                    <li>Already part of the web's visual language</li>
+                </ul>
+                <div class="highlight-box">
+                    Why reinvent the wheel when the perfect solution already exists?
+                </div>
+            </div>
+            <div id="i-symbol-benefits" class="tab-content">
+                <h3>Key Advantages</h3>
+                <p>The (i) symbol provides multiple benefits:</p>
+                <ul>
+                    <li><strong>Space-efficient</strong>: Minimal visual footprint</li>
+                    <li><strong>Device-compatible</strong>: Works across all screen sizes</li>
+                    <li><strong>No explanation needed</strong>: Intuitive functionality</li>
+                    <li><strong>Professional appearance</strong>: Maintains design integrity</li>
+                </ul>
+                <div class="highlight-box">
+                    The symbol creates immediate recognition without disrupting existing design.
+                </div>
+            </div>
+            <div id="i-symbol-implementation" class="tab-content">
+                <h3>How It Works</h3>
+                <p>Simple implementation with powerful results:</p>
+                <ul>
+                    <li>Small (i) icon next to important terms or links</li>
+                    <li>Click reveals organized, tabbed information</li>
+                    <li>One clear image and essential details</li>
+                    <li>Optional action links for next steps</li>
+                </ul>
+                <div class="highlight-box">
+                    Like a digital business card for your website or product - giving visitors exactly what they need in seconds.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WordPress Strategy Popup -->
+    <div id="wordpress-strategy-popup" class="itabs-popup">
+        <div class="popup-header">
+            <h3 class="popup-title">WordPress: The Natural First Step</h3>
+            <button class="close-btn" onclick="closePopup('wordpress-strategy')">&times;</button>
+        </div>
+        <div class="popup-tabs">
+            <button class="popup-tab active" onclick="switchTab('wordpress-strategy', 'rationale')">Rationale</button>
+            <button class="popup-tab" onclick="switchTab('wordpress-strategy', 'phases')">Phases</button>
+            <button class="popup-tab" onclick="switchTab('wordpress-strategy', 'testing')">Testing</button>
+        </div>
+        <div class="popup-content">
+            <div id="wordpress-strategy-rationale" class="tab-content active">
+                <h3>Why WordPress First</h3>
+                <p>WordPress provides the perfect starting point:</p>
+                <ul>
+                    <li>Millions of websites already on WordPress</li>
+                    <li>Users understand plugin installation</li>
+                    <li>Active community of website owners</li>
+                    <li>Clear need for better content presentation</li>
+                </ul>
+                <div class="highlight-box">
+                    WordPress users are ideal first testers - they already manage content and understand the value of enhancement tools.
+                </div>
+            </div>
+            <div id="wordpress-strategy-phases" class="tab-content">
+                <h3>Development Phases</h3>
+                <p>Strategic rollout planned in clear stages:</p>
+                <ul>
+                    <li><strong>Phase 1</strong>: Basic plugin with website/product templates</li>
+                    <li><strong>Phase 2</strong>: Enhanced capabilities and custom branding</li>
+                    <li><strong>Phase 3</strong>: Broader applications and platform expansion</li>
+                </ul>
+                <div class="highlight-box">
+                    Starting simple allows for real user feedback to guide development priorities.
+                </div>
+            </div>
+            <div id="wordpress-strategy-testing" class="tab-content">
+                <h3>Perfect Testing Environment</h3>
+                <p>WordPress users provide ideal validation:</p>
+                <ul>
+                    <li>Active websites with real traffic</li>
+                    <li>Content that benefits from summaries</li>
+                    <li>Understanding of visitor behavior</li>
+                    <li>Ability to measure impact</li>
+                </ul>
+                <div class="highlight-box">
+                    Real businesses with actual goals provide the best testing environment for proving concept value.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Future Vision Popup -->
+    <div id="future-vision-popup" class="itabs-popup">
+        <div class="popup-header">
+            <h3 class="popup-title">Scalable Growth Vision</h3>
+            <button class="close-btn" onclick="closePopup('future-vision')">&times;</button>
+        </div>
+        <div class="popup-tabs">
+            <button class="popup-tab active" onclick="switchTab('future-vision', 'platform')">Platform</button>
+            <button class="popup-tab" onclick="switchTab('future-vision', 'markets')">Markets</button>
+            <button class="popup-tab" onclick="switchTab('future-vision', 'collaboration')">Collaboration</button>
+        </div>
+        <div class="popup-content">
+            <div id="future-vision-platform" class="tab-content active">
+                <h3>Platform Development</h3>
+                <p>Building a comprehensive ecosystem for intelligent web information:</p>
+                <ul>
+                    <li>Form-based creation tools for non-technical users</li>
+                    <li>Template library for different industries</li>
+                    <li>API access for developer integration</li>
+                    <li>Analytics and performance tracking</li>
+                    <li>White-label solutions for agencies</li>
+                </ul>
+                <div class="highlight-box">
+                    The platform enables anyone to create professional SmartLinks without technical expertise.
+                </div>
+            </div>
+            <div id="future-vision-markets" class="tab-content">
+                <h3>Market Opportunities</h3>
+                <p>Multiple pathways for growth and adoption:</p>
+                <ul>
+                    <li><strong>Freelance Platforms</strong>: Enhanced profiles and service offerings</li>
+                    <li><strong>E-commerce</strong>: Rich product information displays</li>
+                    <li><strong>Education</strong>: Interactive learning materials</li>
+                    <li><strong>Marketing</strong>: Engaging campaign content</li>
+                    <li><strong>Documentation</strong>: Technical and user guides</li>
+                </ul>
+                <div class="highlight-box">
+                    Every industry that shares information online can benefit from SmartLinks technology.
+                </div>
+            </div>
+            <div id="future-vision-collaboration" class="tab-content">
+                <h3>Growth Through Collaboration</h3>
+                <p>Open to partnerships that accelerate development and adoption:</p>
+                <ul>
+                    <li>Technical co-founders with complementary skills</li>
+                    <li>Design agencies seeking competitive advantages</li>
+                    <li>Platform integrations and API partnerships</li>
+                    <li>Regional market development opportunities</li>
+                    <li>Investment and scaling partnerships</li>
+                </ul>
+                <div class="highlight-box">
+                    The right partnerships can transform iTabs from concept to global platform faster than solo development.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPopup(popupId, event) {
+            // Close all other popups
+            const popups = document.querySelectorAll('.itabs-popup');
+            popups.forEach(popup => popup.classList.remove('active'));
+            
+            // Get the clicked element and popup
+            const clickedElement = event ? event.target : document.querySelector('.i-indicator');
+            const popup = document.getElementById(popupId + '-popup');
+            
+            // Get position of clicked element
+            const rect = clickedElement.getBoundingClientRect();
+            
+            // Calculate popup position
+            let top = rect.top + 25;
+            let left = rect.left - 200;
+            
+            // Keep popup on screen
+            const popupWidth = 500;
+            const popupHeight = 400;
+            
+            if (left + popupWidth > window.innerWidth) {
+                left = window.innerWidth - popupWidth - 20;
+            }
+            if (left < 20) {
+                left = 20;
+            }
+            
+            if (top + popupHeight > window.innerHeight) {
+                top = rect.top - popupHeight - 5;
+            }
+            if (top < 20) {
+                top = 20;
+            }
+            
+            // Apply position and show popup
+            popup.style.top = top + 'px';
+            popup.style.left = left + 'px';
+            popup.classList.add('active');
+            
+            // Show overlay
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closePopup(popupId) {
+            document.getElementById(popupId + '-popup').classList.remove('active');
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function switchTab(popupId, tabId) {
+            // Remove active class from all tabs in this popup
+            const popup = document.getElementById(popupId + '-popup');
+            const tabs = popup.querySelectorAll('.popup-tab');
+            const contents = popup.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            document.getElementById(popupId + '-' + tabId).classList.add('active');
+        }
+
+        // Close popups when clicking overlay
+        document.getElementById('overlay').addEventListener('click', function() {
+            const popups = document.querySelectorAll('.itabs-popup');
+            popups.forEach(popup => popup.classList.remove('active'));
+            this.style.display = 'none';
+        });
+
+        // Close popups when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.itabs-popup') && !e.target.closest('.i-indicator')) {
+                const popups = document.querySelectorAll('.itabs-popup');
+                popups.forEach(popup => popup.classList.remove('active'));
+                document.getElementById('overlay').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
+<br>
+<br>
+thanks for Smartlinks 👍
+<br>
+<br>
 <!DOCTYPE html>
 <html lang="en">
 <head>
