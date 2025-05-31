@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webflow + SmartLinks: The Perfect Integration</title>
+    <title>iTabs Journey: From GIFs to SmartLinks</title>
     <style>
         * {
             margin: 0;
@@ -14,42 +14,25 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #4353FF 0%, #7C3AED 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             background: white;
             border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #4353FF 0%, #7C3AED 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #ffffff;
             padding: 50px;
             text-align: center;
-            position: relative;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
         }
 
         .header h1 {
@@ -57,816 +40,607 @@
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
         .header .subtitle {
             color: #ffffff !important;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             opacity: 0.95;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .header .description {
             color: #ffffff !important;
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
         .content {
-            padding: 50px;
-        }
-
-        .intro-section {
-            background: linear-gradient(135deg, #F8FAFF 0%, #EEF2FF 100%);
             padding: 40px;
-            border-radius: 16px;
+        }
+
+        .story-section {
             margin-bottom: 40px;
-            border-left: 6px solid #4353FF;
-        }
-
-        .intro-text {
-            font-size: 1.2rem;
-            color: #1E293B;
-            margin-bottom: 25px;
-            line-height: 1.7;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .feature-card {
-            background: #FFFFFF;
-            border: 2px solid #E2E8F0;
+            padding: 25px;
+            background: #f8f9fa;
             border-radius: 12px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            border-left: 4px solid #3498db;
         }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #4353FF, #7C3AED);
+        .story-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(67, 83, 255, 0.15);
-            border-color: #4353FF;
-        }
-
-        .feature-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #1E293B;
-            margin-bottom: 15px;
-        }
-
-        .feature-description {
-            color: #64748B;
-            line-height: 1.6;
-        }
-
-        /* iTabs Styling */
+        /* Simple iTabs Styling */
         .itabs-link {
-            color: #4353FF;
+            color: #3498db;
             text-decoration: none;
-            position: relative;
             font-weight: 600;
-            border-bottom: 2px solid transparent;
-            transition: border-color 0.3s ease;
-        }
-
-        .itabs-link:hover {
-            border-bottom-color: #4353FF;
         }
 
         .i-indicator {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 22px;
-            height: 22px;
-            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #e74c3c;
             color: white;
             border-radius: 50%;
-            font-size: 13px;
+            font-size: 12px;
             font-style: italic;
             font-weight: bold;
-            margin-left: 6px;
+            margin-left: 5px;
             cursor: pointer;
+            text-align: center;
+            line-height: 20px;
             transition: all 0.3s ease;
-            position: relative;
-            top: -2px;
-            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-            animation: pulse 3s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3), 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3), 0 0 0 8px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3), 0 0 0 0 rgba(239, 68, 68, 0); }
         }
 
         .i-indicator:hover {
-            transform: scale(1.15);
-            animation: none;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+            background: #c0392b;
+            transform: scale(1.1);
         }
 
-        /* Popup Styling */
-        .itabs-popup {
-            position: fixed;
-            background: white;
-            width: 550px;
-            max-width: 95vw;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-            z-index: 1000;
+        /* Simple Overlay */
+        .popup-overlay {
             display: none;
-            border: 1px solid #E2E8F0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
         }
 
-        .itabs-popup.active {
-            display: block;
-            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        /* Simple Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            z-index: 1001;
+            overflow: hidden;
         }
 
         .popup-header {
-            background: linear-gradient(135deg, #4353FF 0%, #7C3AED 100%);
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
-            padding: 25px;
-            border-radius: 16px 16px 0 0;
+            padding: 20px;
             position: relative;
         }
 
         .popup-title {
-            color: #ffffff !important;
-            font-weight: 600;
             margin: 0;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
+            font-weight: 600;
         }
 
         .close-btn {
             position: absolute;
+            top: 15px;
             right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.2);
+            background: none;
             border: none;
             color: white;
-            font-size: 22px;
+            font-size: 24px;
             cursor: pointer;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s ease;
         }
 
         .close-btn:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.2);
         }
 
+        /* Tab System */
         .popup-tabs {
             display: flex;
-            background: #F8FAFC;
-            border-bottom: 2px solid #E2E8F0;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         .popup-tab {
             flex: 1;
-            padding: 18px 12px;
+            padding: 15px 10px;
             background: none;
             border: none;
             font-size: 14px;
             font-weight: 600;
-            color: #64748B;
+            color: #666;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
-            position: relative;
+            border-bottom: 3px solid transparent;
         }
 
         .popup-tab:hover {
-            background: rgba(67, 83, 255, 0.05);
-            color: #4353FF;
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
         }
 
         .popup-tab.active {
             background: white;
-            color: #4353FF;
-        }
-
-        .popup-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #4353FF, #7C3AED);
+            color: #3498db;
+            border-bottom: 3px solid #3498db;
         }
 
         .popup-content {
-            padding: 30px;
-            min-height: 300px;
-            max-height: 400px;
+            padding: 0;
+            max-height: 60vh;
             overflow-y: auto;
-            font-size: 15px;
-            line-height: 1.7;
         }
 
         .tab-content {
             display: none;
+            padding: 30px;
+            animation: fadeIn 0.3s ease;
         }
 
         .tab-content.active {
             display: block;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .tab-content h3 {
-            color: #1E293B;
-            margin-bottom: 20px;
+            color: #2c3e50;
+            margin-bottom: 15px;
             font-size: 1.3rem;
-            font-weight: 700;
         }
 
         .tab-content ul {
-            margin: 20px 0;
-            padding-left: 25px;
+            margin: 15px 0;
+            padding-left: 20px;
         }
 
         .tab-content li {
-            margin-bottom: 12px;
-            color: #475569;
-            line-height: 1.6;
-        }
-
-        .tab-content li strong {
-            color: #1E293B;
+            margin-bottom: 8px;
+            color: #34495e;
         }
 
         .highlight-box {
-            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
-            border-left: 4px solid #4353FF;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 2px 8px rgba(67, 83, 255, 0.1);
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 999;
-            display: none;
-            backdrop-filter: blur(2px);
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
         }
 
         .cta-section {
-            background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
             color: white;
-            padding: 40px;
+            padding: 30px;
             text-align: center;
-            margin-top: 50px;
-            border-radius: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
-            opacity: 0.5;
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 2;
+            margin-top: 40px;
+            border-radius: 12px;
         }
 
         .cta-section h3 {
             color: #ffffff !important;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
         }
 
         .cta-section p {
             color: #ffffff !important;
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            opacity: 0.95;
         }
 
         .cta-button {
             display: inline-block;
             background: white;
-            color: #059669;
-            padding: 15px 30px;
-            border-radius: 30px;
+            color: #27ae60;
+            padding: 12px 24px;
+            border-radius: 25px;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+            font-weight: 600;
+            margin-top: 15px;
+            transition: transform 0.3s ease;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255,255,255,0.4);
-        }
-
-        .status-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            margin: 10px 0;
-            animation: glow 2s infinite alternate;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 5px rgba(245, 158, 11, 0.5); }
-            to { box-shadow: 0 0 20px rgba(245, 158, 11, 0.8); }
+            transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {
-            .header h1 { font-size: 2.2rem; }
-            .content { padding: 30px; }
-            .itabs-popup { width: 95vw; }
-            .popup-content { padding: 25px; }
-            .feature-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+            .content { padding: 25px; }
+            .popup { 
+                width: 95%;
+                max-height: 90vh;
+            }
+            .popup-content { 
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="overlay" id="overlay"></div>
+    <!-- Overlay -->
+    <div class="popup-overlay" id="overlay" onclick="closePopup()"></div>
     
     <div class="container">
         <div class="header">
-            <div class="header-content">
-                <h1>Webflow + SmartLinks</h1>
-                <p class="subtitle">The Perfect Design-Development Partnership</p>
-                <p class="description">Revolutionary information display coming to the world's most powerful visual web platform</p>
-                <div class="status-badge">🚀 In Development</div>
-            </div>
+            <h1>The iTabs Origin Story</h1>
+            <p class="subtitle">From CoverCard's lessons to SmartLinks revolution</p>
+            <p class="description">A 5-year journey of innovation and persistence</p>
         </div>
 
         <div class="content">
-            <div class="intro-section">
-                <div class="intro-text">
-                    <span class="itabs-link">Webflow<span class="i-indicator" onclick="showPopup('webflow-platform', event)">i</span></span> has revolutionized web design by giving designers unprecedented control without coding limitations. Now, <span class="itabs-link">SmartLinks integration<span class="i-indicator" onclick="showPopup('smartlinks-integration', event)">i</span></span> will add the missing piece - intelligent information display that keeps visitors engaged and informed.
+            <div class="story-section">
+                <div class="story-text">
+                    The journey began in 2019 when <span class="itabs-link">CoverCard.com.au<span class="i-indicator" onclick="openPopup('covercard')">i</span></span> was wrapping up. A simple question sparked everything: "How could we have promoted CoverCard better, and for free?"
                 </div>
                 
-                <div class="intro-text">
-                    This integration represents a perfect marriage: Webflow's design excellence meets <span class="itabs-link">SmartLinks' innovation<span class="i-indicator" onclick="showPopup('innovation-approach', event)">i</span></span> in contextual information delivery. Together, they'll transform how businesses present complex information to their audiences.
+                <div class="story-text">
+                    This led to the discovery of <span class="itabs-link">GIF makers<span class="i-indicator" onclick="openPopup('gif')">i</span></span> and the realization of their power for visual storytelling. The concept evolved through multiple phases until reaching the breakthrough moment.
                 </div>
             </div>
 
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-title">🎨 Design-First Integration</div>
-                    <div class="feature-description">
-                        SmartLinks will integrate seamlessly with Webflow's visual editor, allowing designers to add interactive information layers without breaking their design flow or requiring custom code.
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-title">⚡ Zero Code Required</div>
-                    <div class="feature-description">
-                        Just like Webflow's philosophy, SmartLinks will be completely visual. Drag, drop, and configure rich information displays using familiar design tools and interfaces.
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-title">📱 Mobile-Optimized</div>
-                    <div class="feature-description">
-                        Built with Webflow's responsive design principles, SmartLinks will automatically adapt to all screen sizes while maintaining the elegant user experience Webflow is known for.
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-title">🔗 Universal Compatibility</div>
-                    <div class="feature-description">
-                        Whether you're building portfolios, e-commerce sites, or business websites, SmartLinks will enhance any Webflow project with intelligent information architecture.
-                    </div>
-                </div>
-            </div>
-
-            <div class="intro-section">
-                <div class="intro-text">
-                    The <span class="itabs-link">development roadmap<span class="i-indicator" onclick="showPopup('development-roadmap', event)">i</span></span> includes both immediate custom code solutions and a future official Webflow App. This approach ensures agencies can start benefiting immediately while building toward marketplace distribution.
+            <div class="story-section">
+                <div class="story-text">
+                    The game-changing realization came with <span class="itabs-link">the Form Breakthrough<span class="i-indicator" onclick="openPopup('form')">i</span></span> - understanding that simple, well-designed forms could create professional content summaries without complex AI systems.
                 </div>
                 
-                <div class="intro-text">
-                    For forward-thinking agencies, this represents an unprecedented opportunity to offer clients something revolutionary: <span class="itabs-link">websites that educate without overwhelming<span class="i-indicator" onclick="showPopup('business-opportunity', event)">i</span></span>, keeping visitors engaged while providing comprehensive information on demand.
+                <div class="story-text">
+                    This led to embracing <span class="itabs-link">the universal (i) symbol<span class="i-indicator" onclick="openPopup('symbol')">i</span></span> as the perfect interface element - already understood by every web user as "click for more information."
                 </div>
             </div>
 
             <div class="cta-section">
-                <div class="cta-content">
-                    <h3>Ready to Pioneer the Future?</h3>
-                    <p>Join the SmartLinks + Webflow revolution and transform how your clients present information</p>
-                    <a href="mailto:hello@itabs.co" class="cta-button">Become a Development Partner</a>
+                <h3>Ready to Transform Web Information?</h3>
+                <p>Join the SmartLinks revolution and help create the future of intelligent web navigation.</p>
+                <a href="mailto:hello@itabs.co" class="cta-button">Start Collaboration</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CoverCard Popup -->
+    <div class="popup" id="popup-covercard">
+        <div class="popup-header">
+            <h3 class="popup-title">CoverCard.com.au Origins</h3>
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+        </div>
+        <div class="popup-tabs">
+            <button class="popup-tab active" onclick="switchTab('covercard', 'problem', this)">Problem</button>
+            <button class="popup-tab" onclick="switchTab('covercard', 'solution', this)">Solution</button>
+            <button class="popup-tab" onclick="switchTab('covercard', 'insight', this)">Key Insight</button>
+        </div>
+        <div class="popup-content">
+            <div id="covercard-problem" class="tab-content active">
+                <h3>The Mining Industry Challenge</h3>
+                <p>Based in Perth during the Pilbara mining boom, the recruitment chaos was overwhelming:</p>
+                <ul>
+                    <li>Workers needed multiple certifications and tickets</li>
+                    <li>Recruitment agents drowning in paperwork</li>
+                    <li>Inefficient application processes</li>
+                    <li>Qualification verification challenges</li>
+                </ul>
+                <div class="highlight-box">
+                    The industry was crying out for streamlined solutions.
+                </div>
+            </div>
+            <div id="covercard-solution" class="tab-content">
+                <h3>What CoverCard Built</h3>
+                <p>A comprehensive platform for mining industry recruitment:</p>
+                <ul>
+                    <li>Central storage for qualifications and certifications</li>
+                    <li>Digital ticket management system</li>
+                    <li>Streamlined application process</li>
+                    <li>Verification and compliance tracking</li>
+                </ul>
+                <div class="highlight-box">
+                    The product was good, but marketing and visibility were the missing pieces.
+                </div>
+            </div>
+            <div id="covercard-insight" class="tab-content">
+                <h3>The Critical Realization</h3>
+                <p>The failure of CoverCard wasn't about the product quality:</p>
+                <ul>
+                    <li>Technical solution was solid and needed</li>
+                    <li>Market demand was clearly present</li>
+                    <li>Problem was communication and promotion</li>
+                    <li>Needed better ways to show value to the world</li>
+                </ul>
+                <div class="highlight-box">
+                    This insight became the foundation for everything that followed - the importance of effective information sharing.
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Webflow Platform Popup -->
-    <div id="webflow-platform-popup" class="itabs-popup">
+    <!-- GIF Discovery Popup -->
+    <div class="popup" id="popup-gif">
         <div class="popup-header">
-            <h3 class="popup-title">Why Webflow Is Perfect for SmartLinks</h3>
-            <button class="close-btn" onclick="closePopup('webflow-platform')">&times;</button>
+            <h3 class="popup-title">The GIF Maker Discovery</h3>
+            <button class="close-btn" onclick="closePopup()">&times;</button>
         </div>
         <div class="popup-tabs">
-            <button class="popup-tab active" onclick="switchTab('webflow-platform', 'philosophy')">Philosophy</button>
-            <button class="popup-tab" onclick="switchTab('webflow-platform', 'capabilities')">Capabilities</button>
-            <button class="popup-tab" onclick="switchTab('webflow-platform', 'ecosystem')">Ecosystem</button>
+            <button class="popup-tab active" onclick="switchTab('gif', 'discovery', this)">Discovery</button>
+            <button class="popup-tab" onclick="switchTab('gif', 'evolution', this)">Evolution</button>
+            <button class="popup-tab" onclick="switchTab('gif', 'naming', this)">Naming</button>
         </div>
         <div class="popup-content">
-            <div id="webflow-platform-philosophy" class="tab-content active">
-                <h3>Design-First Philosophy</h3>
-                <p>Webflow revolutionized web development by putting designers in control:</p>
+            <div id="gif-discovery" class="tab-content active">
+                <h3>The App Store Moment</h3>
+                <p>Exploring the App Store led to a simple but powerful realization:</p>
                 <ul>
-                    <li><strong>Visual development</strong>: Build complex websites without writing code</li>
-                    <li><strong>Designer empowerment</strong>: No more dependency on developers for basic functionality</li>
-                    <li><strong>Pixel-perfect control</strong>: Precise design implementation without compromise</li>
-                    <li><strong>Responsive by default</strong>: Mobile-first approach built into every element</li>
+                    <li>GIF makers were incredibly simple to use</li>
+                    <li>Select photos, add text, share to social media</li>
+                    <li>The ease of creation was revolutionary</li>
+                    <li>Visual storytelling made accessible</li>
                 </ul>
                 <div class="highlight-box">
-                    SmartLinks shares this same philosophy - powerful functionality accessible through intuitive, visual interfaces.
+                    "Why hadn't I thought of this during CoverCard's active days?"
                 </div>
             </div>
-            <div id="webflow-platform-capabilities" class="tab-content">
-                <h3>Technical Capabilities</h3>
-                <p>Webflow's platform provides everything needed for SmartLinks integration:</p>
+            <div id="gif-evolution" class="tab-content">
+                <h3>From GIFs to Links</h3>
+                <p>The concept evolved beyond simple GIF creation:</p>
                 <ul>
-                    <li><strong>Custom code embedding</strong>: Easy integration through site settings and embed elements</li>
-                    <li><strong>CMS integration</strong>: Dynamic content that works with SmartLinks</li>
-                    <li><strong>Interactions API</strong>: Smooth animations and transitions for SmartLinks</li>
-                    <li><strong>Apps marketplace</strong>: Official distribution channel for SmartLinks app</li>
-                    <li><strong>Designer API</strong>: Direct integration with Webflow's visual editor</li>
+                    <li>GIFs tell stories effectively</li>
+                    <li>But links need better promotion methods</li>
+                    <li>Visual information sharing has untapped power</li>
+                    <li>Quick, digestible content wins attention</li>
                 </ul>
                 <div class="highlight-box">
-                    The platform's flexibility means SmartLinks can start as custom code and evolve into a native Webflow feature.
+                    The bridge between visual storytelling and link promotion became the core insight.
                 </div>
             </div>
-            <div id="webflow-platform-ecosystem" class="tab-content">
-                <h3>Thriving Ecosystem</h3>
-                <p>Webflow's growing community creates perfect conditions for SmartLinks adoption:</p>
+            <div id="gif-naming" class="tab-content">
+                <h3>Gifylink Origins</h3>
+                <p>The name combined two powerful concepts:</p>
                 <ul>
-                    <li><strong>300,000+ active designers</strong> always seeking competitive advantages</li>
-                    <li><strong>Agency-focused platform</strong> where innovation spreads quickly</li>
-                    <li><strong>Premium positioning</strong> attracts clients who value cutting-edge solutions</li>
-                    <li><strong>Community sharing</strong> through Webflow University and forums</li>
-                    <li><strong>Template marketplace</strong> for distributing SmartLinks-enhanced designs</li>
+                    <li><strong>GIF</strong>: Visual storytelling and quick information</li>
+                    <li><strong>Link</strong>: Connection and promotion</li>
+                    <li>People initially laughed at the name</li>
+                    <li>GIFs seemed too casual for serious business</li>
                 </ul>
                 <div class="highlight-box">
-                    First-mover advantage in this ecosystem could establish SmartLinks as the standard for intelligent information display.
+                    But the deeper insight was about the power of quick, visual information sharing.
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SmartLinks Integration Popup -->
-    <div id="smartlinks-integration-popup" class="itabs-popup">
+    <!-- Form Breakthrough Popup -->
+    <div class="popup" id="popup-form">
         <div class="popup-header">
-            <h3 class="popup-title">SmartLinks Integration Strategy</h3>
-            <button class="close-btn" onclick="closePopup('smartlinks-integration')">&times;</button>
+            <h3 class="popup-title">The Form Revolution</h3>
+            <button class="close-btn" onclick="closePopup()">&times;</button>
         </div>
         <div class="popup-tabs">
-            <button class="popup-tab active" onclick="switchTab('smartlinks-integration', 'immediate')">Phase 1</button>
-            <button class="popup-tab" onclick="switchTab('smartlinks-integration', 'enhanced')">Phase 2</button>
-            <button class="popup-tab" onclick="switchTab('smartlinks-integration', 'native')">Phase 3</button>
+            <button class="popup-tab active" onclick="switchTab('form', 'realization', this)">Realization</button>
+            <button class="popup-tab" onclick="switchTab('form', 'power', this)">Power</button>
+            <button class="popup-tab" onclick="switchTab('form', 'impact', this)">Impact</button>
         </div>
         <div class="popup-content">
-            <div id="smartlinks-integration-immediate" class="tab-content active">
-                <h3>Immediate Implementation (Custom Code)</h3>
-                <p>Start enhancing Webflow sites today with custom SmartLinks integration:</p>
+            <div id="form-realization" class="tab-content active">
+                <h3>The Simple Truth</h3>
+                <p>The breakthrough moment was beautifully simple:</p>
                 <ul>
-                    <li><strong>Site-wide script</strong>: Add SmartLinks functionality through Webflow's custom code settings</li>
-                    <li><strong>Embed elements</strong>: Place SmartLinks wherever needed using Webflow's embed component</li>
-                    <li><strong>Form-based creation</strong>: Use external SmartLinks creator, then embed the generated code</li>
-                    <li><strong>CMS integration</strong>: Connect SmartLinks with Webflow's dynamic content</li>
-                    <li><strong>Responsive design</strong>: Automatically adapts to Webflow's breakpoint system</li>
+                    <li>Complex AI systems weren't necessary</li>
+                    <li>Well-designed forms could do the job</li>
+                    <li>People just needed easy ways to organize information</li>
+                    <li>Simplicity beats complexity every time</li>
                 </ul>
                 <div class="highlight-box">
-                    This approach allows agencies to start offering SmartLinks services immediately while we develop the official integration.
+                    "We didn't need AI at all. All we needed was a well-designed form."
                 </div>
             </div>
-            <div id="smartlinks-integration-enhanced" class="tab-content">
-                <h3>Enhanced Integration (Browser Extension)</h3>
-                <p>Chrome extension that integrates directly with Webflow Designer:</p>
+            <div id="form-power" class="tab-content">
+                <h3>What Forms Enable</h3>
+                <p>Simple forms became the gateway to professional content:</p>
                 <ul>
-                    <li><strong>Designer integration</strong>: Add SmartLinks directly from the Webflow interface</li>
-                    <li><strong>Visual configuration</strong>: Set up SmartLinks using familiar Webflow-style panels</li>
-                    <li><strong>Template library</strong>: Pre-built SmartLinks for common use cases</li>
-                    <li><strong>Style inheritance</strong>: SmartLinks automatically match site's design system</li>
-                    <li><strong>Preview mode</strong>: Test SmartLinks within Webflow's preview environment</li>
+                    <li>Add key information easily</li>
+                    <li>Upload one relevant image</li>
+                    <li>Create professional quick summaries</li>
+                    <li>Share content effectively across platforms</li>
                 </ul>
                 <div class="highlight-box">
-                    This phase bridges custom implementation with native functionality, providing Webflow-quality user experience.
+                    The power wasn't in technology - it was in giving people easy ways to summarize information.
                 </div>
             </div>
-            <div id="smartlinks-integration-native" class="tab-content">
-                <h3>Native Integration (Official Webflow App)</h3>
-                <p>Full integration through the official Webflow Apps marketplace:</p>
+            <div id="form-impact" class="tab-content">
+                <h3>Revolutionary Implications</h3>
+                <p>This insight changed everything about the approach:</p>
                 <ul>
-                    <li><strong>Webflow Apps listing</strong>: Official distribution through Webflow's curated marketplace</li>
-                    <li><strong>Designer component</strong>: SmartLinks as a native Webflow element alongside text, buttons, etc.</li>
-                    <li><strong>Settings panels</strong>: Configure SmartLinks using Webflow's native interface patterns</li>
-                    <li><strong>Template integration</strong>: Include SmartLinks in Webflow templates and cloneables</li>
-                    <li><strong>API access</strong>: Deep integration with Webflow's platform capabilities</li>
+                    <li>Eliminated technical barriers for users</li>
+                    <li>Made creation accessible to everyone</li>
+                    <li>Focused on user needs, not technical capabilities</li>
+                    <li>Opened endless possibilities for applications</li>
                 </ul>
                 <div class="highlight-box">
-                    This represents the ultimate goal - SmartLinks as a fundamental part of the Webflow design toolkit.
+                    Sometimes the most powerful solutions are the simplest ones.
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Innovation Approach Popup -->
-    <div id="innovation-approach-popup" class="itabs-popup">
+    <!-- Symbol Popup -->
+    <div class="popup" id="popup-symbol">
         <div class="popup-header">
-            <h3 class="popup-title">SmartLinks Innovation Approach</h3>
-            <button class="close-btn" onclick="closePopup('innovation-approach')">&times;</button>
+            <h3 class="popup-title">The Universal (i) Symbol</h3>
+            <button class="close-btn" onclick="closePopup()">&times;</button>
         </div>
         <div class="popup-tabs">
-            <button class="popup-tab active" onclick="switchTab('innovation-approach', 'problem')">Problem</button>
-            <button class="popup-tab" onclick="switchTab('innovation-approach', 'solution')">Solution</button>
-            <button class="popup-tab" onclick="switchTab('innovation-approach', 'innovation')">Innovation</button>
+            <button class="popup-tab active" onclick="switchTab('symbol', 'recognition', this)">Recognition</button>
+            <button class="popup-tab" onclick="switchTab('symbol', 'benefits', this)">Benefits</button>
+            <button class="popup-tab" onclick="switchTab('symbol', 'implementation', this)">Implementation</button>
         </div>
         <div class="popup-content">
-            <div id="innovation-approach-problem" class="tab-content active">
-                <h3>The Information Overwhelm Problem</h3>
-                <p>Modern websites face a fundamental challenge:</p>
+            <div id="symbol-recognition" class="tab-content active">
+                <h3>Universal Understanding</h3>
+                <p>The (i) symbol is perfectly positioned for this solution:</p>
                 <ul>
-                    <li><strong>Too much information</strong> overwhelms visitors and increases bounce rates</li>
-                    <li><strong>Too little information</strong> forces visitors to research elsewhere</li>
-                    <li><strong>Traditional solutions</strong> like long pages or multiple pages both have major drawbacks</li>
-                    <li><strong>Mobile constraints</strong> make information organization even more challenging</li>
-                    <li><strong>User expectations</strong> for instant access to relevant information continue rising</li>
+                    <li>Every website user already understands it</li>
+                    <li>Universally recognized across cultures</li>
+                    <li>Professional and trusted appearance</li>
+                    <li>Already part of the web's visual language</li>
                 </ul>
                 <div class="highlight-box">
-                    The average website loses 47% of visitors who leave to research before making decisions.
+                    Why reinvent the wheel when the perfect solution already exists?
                 </div>
             </div>
-            <div id="innovation-approach-solution" class="tab-content">
-                <h3>The SmartLinks Solution</h3>
-                <p>SmartLinks solve the information paradox through intelligent progressive disclosure:</p>
+            <div id="symbol-benefits" class="tab-content">
+                <h3>Key Advantages</h3>
+                <p>The (i) symbol provides multiple benefits:</p>
                 <ul>
-                    <li><strong>Clean interfaces</strong> with comprehensive information available on demand</li>
-                    <li><strong>Contextual access</strong> - information appears exactly where and when needed</li>
-                    <li><strong>Organized presentation</strong> through intuitive tabbed interfaces</li>
-                    <li><strong>Universal recognition</strong> using the familiar "i" information symbol</li>
-                    <li><strong>Engagement retention</strong> - visitors never need to leave to get answers</li>
+                    <li><strong>Space-efficient</strong>: Minimal visual footprint</li>
+                    <li><strong>Device-compatible</strong>: Works across all screen sizes</li>
+                    <li><strong>No explanation needed</strong>: Intuitive functionality</li>
+                    <li><strong>Professional appearance</strong>: Maintains design integrity</li>
                 </ul>
                 <div class="highlight-box">
-                    Users get the information they need while maintaining their flow and focus on your content.
+                    The symbol creates immediate recognition without disrupting existing design.
                 </div>
             </div>
-            <div id="innovation-approach-innovation" class="tab-content">
-                <h3>What Makes This Revolutionary</h3>
-                <p>SmartLinks represent a fundamental advance in web information architecture:</p>
+            <div id="symbol-implementation" class="tab-content">
+                <h3>How It Works</h3>
+                <p>Simple implementation with powerful results:</p>
                 <ul>
-                    <li><strong>Form-based creation</strong>: Anyone can create professional information displays</li>
-                    <li><strong>No coding required</strong>: Democratizes advanced functionality for all users</li>
-                    <li><strong>Universal compatibility</strong>: Works across all platforms and devices</li>
-                    <li><strong>Scalable approach</strong>: From individual elements to comprehensive information systems</li>
-                    <li><strong>Future-ready design</strong>: Built for evolving user expectations and technology</li>
+                    <li>Small (i) icon next to important terms or links</li>
+                    <li>Click reveals organized, tabbed information</li>
+                    <li>One clear image and essential details</li>
+                    <li>Optional action links for next steps</li>
                 </ul>
                 <div class="highlight-box">
-                    This isn't just a new feature - it's a new way of thinking about information presentation on the web.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Development Roadmap Popup -->
-    <div id="development-roadmap-popup" class="itabs-popup">
-        <div class="popup-header">
-            <h3 class="popup-title">Development Roadmap & Timeline</h3>
-            <button class="close-btn" onclick="closePopup('development-roadmap')">&times;</button>
-        </div>
-        <div class="popup-tabs">
-            <button class="popup-tab active" onclick="switchTab('development-roadmap', 'q1-2025')">Q1 2025</button>
-            <button class="popup-tab" onclick="switchTab('development-roadmap', 'q2-2025')">Q2 2025</button>
-            <button class="popup-tab" onclick="switchTab('development-roadmap', 'q3-2025')">Q3-Q4 2025</button>
-        </div>
-        <div class="popup-content">
-            <div id="development-roadmap-q1-2025" class="tab-content active">
-                <h3>Q1 2025: Foundation & Pilot</h3>
-                <p>Establishing core functionality and initial partnerships:</p>
-                <ul>
-                    <li><strong>Custom integration development</strong>: Complete Webflow custom code implementation</li>
-                    <li><strong>Agency pilot program</strong>: Partner with 3-5 forward-thinking Webflow agencies</li>
-                    <li><strong>Template creation</strong>: Develop SmartLinks templates for common Webflow use cases</li>
-                    <li><strong>Documentation</strong>: Complete integration guides and best practices</li>
-                    <li><strong>Case studies</strong>: Document results from pilot implementations</li>
-                </ul>
-                <div class="highlight-box">
-                    Focus on proving concept with real Webflow projects and gathering feedback for refinement.
-                </div>
-            </div>
-            <div id="development-roadmap-q2-2025" class="tab-content">
-                <h3>Q2 2025: Enhanced Tools & Community</h3>
-                <p>Building advanced tools and expanding adoption:</p>
-                <ul>
-                    <li><strong>Browser extension launch</strong>: Chrome extension for Designer integration</li>
-                    <li><strong>Template marketplace</strong>: SmartLinks-enhanced Webflow templates</li>
-                    <li><strong>Community building</strong>: Webflow University courses and community engagement</li>
-                    <li><strong>Partner program expansion</strong>: Scale to 25+ agency partners</li>
-                    <li><strong>Analytics integration</strong>: Track SmartLinks performance and ROI</li>
-                </ul>
-                <div class="highlight-box">
-                    This phase focuses on scaling adoption through the Webflow community and ecosystem.
-                </div>
-            </div>
-            <div id="development-roadmap-q3-2025" class="tab-content">
-                <h3>Q3-Q4 2025: Official Integration</h3>
-                <p>Achieving official Webflow marketplace presence:</p>
-                <ul>
-                    <li><strong>Webflow App submission</strong>: Apply for official Apps marketplace listing</li>
-                    <li><strong>Native component development</strong>: SmartLinks as a native Webflow element</li>
-                    <li><strong>API integration</strong>: Deep integration with Webflow's platform APIs</li>
-                    <li><strong>Enterprise features</strong>: Advanced functionality for large organizations</li>
-                    <li><strong>Global launch</strong>: Full marketplace availability and marketing campaign</li>
-                </ul>
-                <div class="highlight-box">
-                    The ultimate goal: SmartLinks as a standard part of every Webflow designer's toolkit.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Business Opportunity Popup -->
-    <div id="business-opportunity-popup" class="itabs-popup">
-        <div class="popup-header">
-            <h3 class="popup-title">Business Opportunity for Agencies</h3>
-            <button class="close-btn" onclick="closePopup('business-opportunity')">&times;</button>
-        </div>
-        <div class="popup-tabs">
-            <button class="popup-tab active" onclick="switchTab('business-opportunity', 'immediate')">Immediate</button>
-            <button class="popup-tab" onclick="switchTab('business-opportunity', 'competitive')">Competitive</button>
-            <button class="popup-tab" onclick="switchTab('business-opportunity', 'revenue')">Revenue</button>
-        </div>
-        <div class="popup-content">
-            <div id="business-opportunity-immediate" class="tab-content active">
-                <h3>Immediate Competitive Advantage</h3>
-                <p>SmartLinks provide agencies with instant differentiation:</p>
-                <ul>
-                    <li><strong>Unique offering</strong>: Be the only agency in your market offering intelligent information display</li>
-                    <li><strong>Premium positioning</strong>: Justify higher project fees with advanced functionality</li>
-                    <li><strong>Client retention</strong>: Better results lead to longer client relationships</li>
-                    <li><strong>Portfolio enhancement</strong>: Showcase cutting-edge capabilities in your own site</li>
-                    <li><strong>Word-of-mouth marketing</strong>: Clients share impressive experiences with their networks</li>
-                </ul>
-                <div class="highlight-box">
-                    Early adopters can establish themselves as innovation leaders before competitors catch up.
-                </div>
-            </div>
-            <div id="business-opportunity-competitive" class="tab-content">
-                <h3>Long-term Competitive Moat</h3>
-                <p>SmartLinks create sustainable advantages that are difficult to replicate:</p>
-                <ul>
-                    <li><strong>Technical expertise</strong>: Deep knowledge of SmartLinks implementation and optimization</li>
-                    <li><strong>Template library</strong>: Accumulated library of proven SmartLinks solutions</li>
-                    <li><strong>Case study portfolio</strong>: Documented results and client success stories</li>
-                    <li><strong>Platform partnership</strong>: Potential co-development opportunities with SmartLinks team</li>
-                    <li><strong>Market positioning</strong>: Established reputation as the "SmartLinks agency"</li>
-                </ul>
-                <div class="highlight-box">
-                    Building expertise early creates barriers that protect your competitive position long-term.
-                </div>
-            </div>
-            <div id="business-opportunity-revenue" class="tab-content">
-                <h3>Revenue Impact & Growth</h3>
-                <p>Multiple pathways for increased revenue and business growth:</p>
-                <ul>
-                    <li><strong>Premium pricing</strong>: 20-30% higher project fees for SmartLinks-enhanced sites</li>
-                    <li><strong>Recurring revenue</strong>: Ongoing optimization and content management services</li>
-                    <li><strong>Referral generation</strong>: Impressive results lead to increased client referrals</li>
-                    <li><strong>Market expansion</strong>: Attract clients who specifically seek advanced functionality</li>
-                    <li><strong>Partnership opportunities</strong>: Revenue sharing for bringing other agencies into ecosystem</li>
-                </ul>
-                <div class="highlight-box">
-                    Conservative estimates suggest 40-60% revenue increase for agencies that successfully integrate SmartLinks into their service offering.
+                    Like a digital business card for your website or product - giving visitors exactly what they need in seconds.
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function showPopup(popupId, event) {
-            // Close all other popups
-            const popups = document.querySelectorAll('.itabs-popup');
-            popups.forEach(popup => popup.classList.remove('active'));
+        // SIMPLE, BULLETPROOF JAVASCRIPT WITH TABS
+        
+        function openPopup(popupId) {
+            console.log('Opening popup:', popupId);
             
-            // Get the clicked element and popup
-            const clickedElement = event ? event.target : document.querySelector('.i-indicator');
-            const popup = document.getElementById(popupId + '-popup');
-            
-            // Get position of clicked element
-            const rect = clickedElement.getBoundingClientRect();
-            
-            // Calculate popup position
-            let top = rect.top + 30;
-            let left = rect.left - 250;
-            
-            // Keep popup on screen
-            const popupWidth = 550;
-            const popupHeight = 450;
-            
-            if (left + popupWidth > window.innerWidth) {
-                left = window.innerWidth - popupWidth - 20;
-            }
-            if (left < 20) {
-                left = 20;
-            }
-            
-            if (top + popupHeight > window.innerHeight) {
-                top = rect.top - popupHeight - 10;
-            }
-            if (top < 20) {
-                top = 20;
-            }
-            
-            // Apply position and show popup
-            popup.style.top = top + 'px';
-            popup.style.left = left + 'px';
-            popup.classList.add('active');
+            // Close any open popups first
+            closePopup();
             
             // Show overlay
             document.getElementById('overlay').style.display = 'block';
+            
+            // Show specific popup
+            const popup = document.getElementById('popup-' + popupId);
+            if (popup) {
+                popup.style.display = 'block';
+                console.log('Popup opened successfully');
+                
+                // Reset to first tab
+                resetToFirstTab(popupId);
+            } else {
+                console.log('Popup not found:', 'popup-' + popupId);
+            }
         }
-
-        function closePopup(popupId) {
-            document.getElementById(popupId + '-popup').classList.remove('active');
+        
+        function closePopup() {
+            console.log('Closing popups');
+            
+            // Hide overlay
             document.getElementById('overlay').style.display = 'none';
+            
+            // Hide all popups
+            const popups = document.querySelectorAll('.popup');
+            popups.forEach(popup => {
+                popup.style.display = 'none';
+            });
         }
-
-        function switchTab(popupId, tabId) {
+        
+        function switchTab(popupId, tabId, clickedTab) {
+            console.log('Switching tab:', popupId, tabId);
+            
+            // Get the popup container
+            const popup = document.getElementById('popup-' + popupId);
+            if (!popup) return;
+            
             // Remove active class from all tabs in this popup
-            const popup = document.getElementById(popupId + '-popup');
+            const tabs = popup.querySelectorAll('.popup-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all tab contents in this popup
+            const contents = popup.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            clickedTab.classList.add('active');
+            
+            // Show corresponding content
+            const targetContent = document.getElementById(popupId + '-' + tabId);
+            if (targetContent) {
+                targetContent.classList.add('active');
+                console.log('Tab switched successfully to:', tabId);
+            } else {
+                console.log('Tab content not found:', popupId + '-' + tabId);
+            }
+        }
+        
+        function resetToFirstTab(popupId) {
+            const popup = document.getElementById('popup-' + popupId);
+            if (!popup) return;
+            
+            // Remove active from all tabs and contents
             const tabs = popup.querySelectorAll('.popup-tab');
             const contents = popup.querySelectorAll('.tab-content');
             
             tabs.forEach(tab => tab.classList.remove('active'));
             contents.forEach(content => content.classList.remove('active'));
             
-            // Add active class to clicked tab
-            event.target.classList.add('active');
-            document.getElementById(popupId + '-' + tabId).classList.add('active');
+            // Activate first tab and content
+            if (tabs.length > 0) {
+                tabs[0].classList.add('active');
+            }
+            if (contents.length > 0) {
+                contents[0].classList.add('active');
+            }
         }
-
-        // Close popups when clicking overlay
-        document.getElementById('overlay').addEventListener('click', function() {
-            const popups = document.querySelectorAll('.itabs-popup');
-            popups.forEach(popup => popup.classList.remove('active'));
-            this.style.display = 'none';
-        });
-
-        // Close popups when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.itabs-popup') && !e.target.closest('.i-indicator')) {
-                const popups = document.querySelectorAll('.itabs-popup');
-                popups.forEach(popup => popup.classList.remove('active'));
-                document.getElementById('overlay').style.display = 'none';
+        
+        // Close popup when pressing Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closePopup();
             }
         });
+        
+        console.log('iTabs JavaScript with tabs loaded and ready');
     </script>
 </body>
 </html>
